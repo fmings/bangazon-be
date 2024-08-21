@@ -1,6 +1,6 @@
 ---
-name: Custom issue template
-about: Describe this issue template's purpose here.
+name: Back-end Issue Ticket
+about: General issue tickets for project
 title: ''
 labels: ''
 assignees: fmings
