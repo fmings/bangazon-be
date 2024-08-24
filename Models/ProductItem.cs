@@ -8,6 +8,8 @@
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
         public string SellerId { get; set; }
+
+        public int InventoryQty { get; set; }
         
     }
 }
