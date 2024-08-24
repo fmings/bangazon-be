@@ -6,6 +6,18 @@ namespace bangazon.API
     {
         public static void Map(WebApplication app)
         {
+            // CHECK USERS
+            app.MapGet("/checkUser/{uid}", (BangazonDBContext db, string uid) =>
+            {
+                var user = db.Users.Where(u => u.Id == uid).ToList();
+
+                if (uid == null)
+                {
+                    return Results.NotFound();
+                }
+                return Results.Ok(user);
+            });
+            
             // GET USER
             app.MapGet("/api/user/{id}", (BangazonDBContext db, string id) =>
             {
