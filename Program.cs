@@ -3,6 +3,7 @@ using bangazon;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using bangazon.Models;
+using bangazon.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+OrderAPI.Map(app);
+OrderItemAPI.Map(app);
+PaymentDetailAPI.Map(app);
+ProductItemAPI.Map(app);
+UserAPI.Map(app);
 
 
 app.Run();

@@ -22,6 +22,14 @@ namespace bangazon.API
                 }
                 return Results.Ok(productItem);
             });
+
+            // GET PRODUCTS BY SELLER
+            app.MapGet("/api/seller/{id}/products", (BangazonDBContext db, string id) =>
+            {
+                List<ProductItem> sellerProducts = db.ProductItems.Where(pi => pi.SellerId == id).ToList();
+                return sellerProducts;
+            });
+
         }
     }
 }
