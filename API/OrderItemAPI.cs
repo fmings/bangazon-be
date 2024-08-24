@@ -6,6 +6,14 @@ namespace bangazon.API
     {
         public static void Map(WebApplication app)
         {
+
+            // GET ORDERITEMS
+            app.MapGet("/api/order/{id}/orderitems", (BangazonDBContext db, int id) =>
+            {
+                List<OrderItem> orderItems = db.OrderItems.Where(oi => oi.OrderId == id).ToList();
+                return Results.Ok(orderItems);
+            });
+
             // DELETE ORDERITEM
             app.MapDelete("/api/orderitem/{id}", (BangazonDBContext db, int id) =>
             {

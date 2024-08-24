@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using bangazon;
@@ -11,9 +12,11 @@ using bangazon;
 namespace bangazon.Migrations
 {
     [DbContext(typeof(BangazonDBContext))]
-    partial class BangazonDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240824175452_InventorySeedData")]
+    partial class InventorySeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,6 +34,7 @@ namespace bangazon.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("CustomerId")
@@ -47,15 +51,18 @@ namespace bangazon.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("State")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("StreetAddress")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("numeric");
 
                     b.Property<string>("Zip")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
