@@ -21,6 +21,14 @@ namespace bangazon.API
                 return Results.Ok(order);
             });
 
+            // POST ORDER
+            app.MapPost("/api/order", (BangazonDBContext db, Order order) =>
+            {
+                    db.Orders.Add(order);
+                    db.SaveChanges();
+                    return Results.Created($"/api/order/{order.Id}", order);
+            });
+
             // PATCH ORDER (when shipment details are added)
             app.MapPatch("/api/order/{id}", (BangazonDBContext db, int id, Order updatedDetails) =>
             {

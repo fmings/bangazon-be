@@ -8,9 +8,9 @@
         public decimal TotalAmount { get; set; }
         public DateTime OrderDate { get; set; }
         public int PaymentId { get; set; }
-        public string StreetAddress { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string Zip { get; set; }
+        public string? StreetAddress { get; set; }
+        public string? City { get; set; }
+        public string? State { get; set; }
+        public string? Zip { get; set; }
     }
 }
