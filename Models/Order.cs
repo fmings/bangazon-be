@@ -3,7 +3,7 @@
     public class Order
     {
         public int Id { get; set; }
-        public string CustomerId { get; set; }
+        public string? CustomerId { get; set; }
         public bool Open { get; set; }
         public decimal TotalAmount { get; set; }
         public DateTime OrderDate { get; set; }
@@ -12,5 +12,7 @@
         public string? City { get; set; }
         public string? State { get; set; }
         public string? Zip { get; set; }
+
+        public string? GuestId { get; set; }
     }
 }
