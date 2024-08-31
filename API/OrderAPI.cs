@@ -1,4 +1,5 @@
-﻿using bangazon.Models;
+﻿using System.Security.Claims;
+using bangazon.Models;
 
 namespace bangazon.API
 {
@@ -42,6 +43,33 @@ namespace bangazon.API
                 orderToUpdate.State = updatedDetails.State;
                 orderToUpdate.Zip = updatedDetails.Zip;
                 return Results.Ok(orderToUpdate);
+            });
+
+            // GET LATEST OPEN ORDER
+            app.MapGet("/api/order/latest", (BangazonDBContext db, HttpContext context) =>
+            {
+                string guestId = null;
+                var user = context.User.Identity.IsAuthenticated ? context.User : null;
+
+                Order openOrder;
+
+                if (user != null)
+                {
+                    var userId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                    openOrder = db.Orders.SingleOrDefault(oo => oo.Open && oo.CustomerId == userId);
+                }
+                else
+                {
+                    if (!context.Request.Cookies.TryGetValue("GuestId", out guestId))
+                    {
+                        // Just return NotFound if GuestId cookie is not present
+                        return Results.NotFound();
+                    }
+                    openOrder = db.Orders.SingleOrDefault(oo => oo.Open && oo.GuestId == guestId);
+                    Console.WriteLine("guestid:", guestId);
+                }
+
+                return openOrder != null ? Results.Ok(openOrder.Id) : Results.NotFound();
             });
         }
     }
