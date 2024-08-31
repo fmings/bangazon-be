@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using bangazon.Migrations;
 using bangazon.Models;
 
 namespace bangazon.API
@@ -70,6 +71,14 @@ namespace bangazon.API
                 }
 
                 return openOrder != null ? Results.Ok(openOrder.Id) : Results.NotFound();
+            });
+
+            // GET LATEST OPEN ORDER BY UID
+            app.MapGet("/api/order/latest/{uid}", (BangazonDBContext db, string uid) =>
+            {
+                Order openOrder = db.Orders.SingleOrDefault(oo => oo.Open && oo.CustomerId == uid);
+                return openOrder != null ? Results.Ok(openOrder.Id) : Results.NotFound();
+
             });
         }
     }

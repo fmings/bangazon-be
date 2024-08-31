@@ -9,11 +9,11 @@ namespace bangazon.API
             // CHECK USERS
             app.MapGet("/checkUser/{uid}", (BangazonDBContext db, string uid) =>
             {
-                var user = db.Users.Where(u => u.Id == uid).ToList();
+                var user = db.Users.FirstOrDefault(u => u.Id == uid);
 
-                if (uid == null)
+                if (user == null)
                 {
-                    return Results.NotFound();
+                    return Results.Json(new { error = "User not found" }, statusCode: 404);
                 }
                 return Results.Ok(user);
             });

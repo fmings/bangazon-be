@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using bangazon.Models;
 using bangazon.API;
+using Microsoft.AspNetCore.Builder.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +47,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// public void ConfigureServices(IServiceCollection services)
+// {
+    // FirebaseApp.Create(new AppOptions()
+    // {
+        // Credential = GoogleCredential.FromFile("path/to/your-service-account-file.json"),
+    // });
+// }
 
 OrderAPI.Map(app);
 OrderItemAPI.Map(app);
