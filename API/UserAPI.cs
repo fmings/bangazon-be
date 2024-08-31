@@ -29,6 +29,14 @@ namespace bangazon.API
                 return Results.Ok(user);
             });
 
+            // REGISTER USER
+            app.MapPost("/register", (BangazonDBContext db, User newUser) =>
+            {
+                db.Users.Add(newUser);
+                db.SaveChanges();
+                return Results.Ok(newUser);
+            });
+
         }
     }
 }

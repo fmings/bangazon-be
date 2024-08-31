@@ -48,7 +48,11 @@ namespace bangazon.API
                     {
                         // Generate a new GuestId if it doesn't exist
                         guestId = Guid.NewGuid().ToString();
-                        context.Response.Cookies.Append("GuestId", guestId);
+                        context.Response.Cookies.Append("GuestId", guestId, new CookieOptions
+                        {
+                            SameSite = SameSiteMode.None,
+                            Secure = false
+                        });
                     }
                     openOrder = db.Orders.SingleOrDefault(oo => oo.Open && oo.GuestId == guestId);
                 }
