@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using bangazon.Migrations;
 using bangazon.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace bangazon.API
 {
@@ -10,6 +11,26 @@ namespace bangazon.API
         public static void Map(WebApplication app)
         {
             // GET ORDER TOTAL
+            app.MapGet("/api/order/{id}/total", async (BangazonDBContext db, int id) => {
+
+                var order = db.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.ProductItem)
+                .FirstOrDefault(o => o.Id == id);
+
+                if (order == null)
+                {
+                    return Results.NotFound("Order not found.");
+                }
+
+                // Calculate the total amount
+                order.TotalAmount = order.OrderItems.Sum(oi => oi.ProductItem.Price);
+
+                // Save the updated order back to the database
+                await db.SaveChangesAsync();
+
+                return Results.Ok(order);
+            });
 
 
             // GET ORDER

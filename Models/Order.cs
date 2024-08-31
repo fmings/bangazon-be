@@ -14,5 +14,12 @@
         public string? Zip { get; set; }
 
         public string? GuestId { get; set; }
+
+        public ICollection<OrderItem> OrderItems { get; set; }
+
+        public decimal CalculateTotalAmount()
+        {
+            return OrderItems?.Sum(oi => oi.Price) ?? 0;
+        }
     }
 }
