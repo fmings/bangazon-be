@@ -60,10 +60,12 @@ namespace bangazon.API
                 {
                     return Results.NotFound();
                 }
+                orderToUpdate.Open = updatedDetails.Open;
                 orderToUpdate.StreetAddress = updatedDetails.StreetAddress;
                 orderToUpdate.City = updatedDetails.City;
                 orderToUpdate.State = updatedDetails.State;
                 orderToUpdate.Zip = updatedDetails.Zip;
+                db.SaveChanges();
                 return Results.Ok(orderToUpdate);
             });
 
