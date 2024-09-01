@@ -12,10 +12,13 @@ namespace bangazon.API
                 return db.ProductItems.ToList();
             });
 
-            // GET SINGLE PRODUCT BY ID
-            app.MapGet("/api/product/{id}", (BangazonDBContext db, int id) =>
+            // GET SINGLE PRODUCT BY ID WITH USER DETAILS
+            app.MapGet("/api/product/{id}", async (BangazonDBContext db, int id) =>
             {
-                ProductItem productItem = db.ProductItems.FirstOrDefault(p => p.Id == id);
+                ProductItem productItem = await db.ProductItems
+                .Include(p => p.User) // Eagerly load the User entity
+                .FirstOrDefaultAsync(p => p.Id == id);
+
                 if (productItem == null)
                 {
                     return Results.NotFound();
@@ -26,7 +29,7 @@ namespace bangazon.API
             // GET PRODUCTS BY SELLER
             app.MapGet("/api/seller/{id}/products", (BangazonDBContext db, string id) =>
             {
-                List<ProductItem> sellerProducts = db.ProductItems.Where(pi => pi.SellerId == id).ToList();
+                List<ProductItem> sellerProducts = db.ProductItems.Where(pi => pi.UserId == id).ToList();
                 return sellerProducts;
             });
 
